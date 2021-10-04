@@ -93,12 +93,12 @@ while run:
             bullets.append(arrow(round(x + width // 2), round(y +
             height // 2), 5, (255, 0, 0), facing))
 
-    if keys[pygame.K_LEFT] and x > 10:
+    if keys[pygame.K_a] and x > 10:
         x -= speed
         left = True
         right = False
         lastMove = "left"
-    elif keys[pygame.K_RIGHT] and x < 500 - width - 10:
+    elif keys[pygame.K_d] and x < 500 - width - 10:
         x += speed
         left = False
         right = True
@@ -109,7 +109,7 @@ while run:
         animCount = 0
 
     if not(isJump):
-        if keys[pygame.K_SPACE]:
+        if keys[pygame.K_w] or keys[pygame.K_SPACE]:
             isJump = True
     else:
         if jumpCount >= -10:
