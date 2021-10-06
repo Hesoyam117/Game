@@ -20,6 +20,10 @@ foeWalkLeft = [pygame.image.load('arab_left_1.png'), pygame.image.load('arab_lef
 pygame.image.load('arab_left_3.png'), pygame.image.load('arab_left_4.png'),
 pygame.image.load('arab_left_5.png'), pygame.image.load('arab_left_6.png')]
 
+foeWalkRight = [pygame.image.load('arab_right_1.png'),
+pygame.image.load('arab_right_2.png'), pygame.image.load('arab_right_3.png'),
+pygame.image.load('arab_right_4.png'), pygame.image.load('arab_right_5.png'),
+pygame.image.load('arab_right_6.png')]
 
 
 arr_r = pygame.image.load('arrow.png')
@@ -53,6 +57,9 @@ left = False
 right = False
 animCount = 0
 lastMove = "right"
+foe_left = True
+foe_right = False
+foe_animCount = 0
 
 foe_x = 400
 foe_y = 435
@@ -81,6 +88,7 @@ class arrow():
 
 def drawWindow():
     global animCount
+    global foe_animCount
     if levelCount == 0:
         win.blit(bg, (0, 0))
     if levelCount == 1:
@@ -88,7 +96,7 @@ def drawWindow():
 
     win.blit(hp_bar, (20, 20))
     pygame.draw.rect(win, (255, 0, 0), (23, 23, hp, 30))
-    win.blit(arab, (foe_x, foe_y))
+    #win.blit(arab, (foe_x, foe_y))
     if animCount + 1 >= 30:
         animCount = 0
     if left:
@@ -101,12 +109,23 @@ def drawWindow():
         win.blit(playerStand, (x, y))
     for bullet in bullets:
         bullet. draw(win)
+
+        #win.blit(dead, (250, 250))
+    if foe_animCount + 1 >= 30:
+        foe_animCount = 0
+    if foe_left == True:
+        #foe_right = False
+        win.blit(foeWalkLeft[foe_animCount // 5], (foe_x, foe_y))
+        foe_animCount += 1
+    elif foe_right == True:
+        #foe_left = False
+        win.blit(foeWalkRight[animCount // 5], (foe_x, foe_y))
+        foe_animCount += 1
+    else:
+        win.blit(arab, (foe_x, foe_y))
     if hp <= 0:
         death = 1
         win.blit(dead_scr, (0, 0))
-        #win.blit(dead, (250, 250))
-
-
 
 
     pygame.display.update()
@@ -116,11 +135,15 @@ bullets = []
 arabs = []
 while run:
     clock.tick(30)
-    if ((x + width - 25) <= foe_x):
+    if ((x + width - 25) <= foe_x and y >= foe_y):
         foe_x -= foe_speed
+        foe_left = True
+        foe_right = False
     elif ((x - width + 25) >= foe_x):
         foe_x += foe_speed
-    if (((x + width - 25) == foe_x) or ((x - width + 25) == foe_x)):
+        foe_right = True
+        foe_left = False
+    if (((x + width - 25) == foe_x) or ((x - width + 25) == foe_x) and y >= foe_y):
         #time.sleep
         if (hp != 0):
             hp -= 5
