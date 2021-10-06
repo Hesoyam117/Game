@@ -104,7 +104,7 @@ def drawWindow():
     if hp <= 0:
         death = 1
         win.blit(dead_scr, (0, 0))
-        win.blit(dead, (250, 250))
+        #win.blit(dead, (250, 250))
 
 
 
