@@ -36,6 +36,12 @@ dead_scr = pygame.image.load('deadscreen.png')
 bg = pygame.image.load('bg.jpg')
 bg2 = pygame.image.load('bg_2.jpg')
 playerStand = pygame.image.load('idle.png')
+wall = pygame.image.load('wall.png')
+tower1 = pygame.image.load('tower1.png')
+towergain1 = pygame.image.load('towergain1.png')
+
+
+
 
 clock = pygame.time.Clock()
 
@@ -47,6 +53,13 @@ ob_x2 = 720
 ob_x3 = 990
 ob_x4 = 1500
 ob_x5 = 1750
+wallx = 400
+deadend_r = False
+deadend_l = False
+jumpNo = False
+collide_up = False
+
+
 
 
 
@@ -79,6 +92,7 @@ foe_animCount = 0
 foe_x = 400
 foe_y = 435
 foe_speed = 3
+foe_1 = 400
 
 
 class arrow():
@@ -110,13 +124,15 @@ def drawWindow():
         #win.blit(bg2, (0, 0))
 
     win.blit(hp_bar, (20, 20))
+    win.blit(wall, (wallx, 347))
     pygame.draw.rect(win, (255, 0, 0), (23, 23, hp, 30))
     #win.blit(arab, (foe_x, foe_y))
-    pygame.draw.rect(win, (255, 0, 0), (ob_x, 200, 50, 30))
-    pygame.draw.rect(win, (0, 255, 0), (ob_x2, 350, 80, 40))
-    pygame.draw.rect(win, (0, 0, 255), (ob_x3, 400, 70, 50))
-    pygame.draw.rect(win, (255, 0, 0), (ob_x4, 150, 40, 20))
-    pygame.draw.rect(win, (0, 255, 0), (ob_x5, 300, 100, 20))
+    #pygame.draw.rect(win, (255, 0, 0), (ob_x, 200, 50, 30))
+    win.blit(tower1, (ob_x, 200))
+    #pygame.draw.rect(win, (0, 255, 0), (ob_x2, 350, 80, 40))
+    pygame.draw.rect(win, (255, 200, 0), (ob_x3, 400, 70, 20))
+    #pygame.draw.rect(win, (255, 0, 0), (ob_x4, 150, 40, 20))
+    #pygame.draw.rect(win, (0, 255, 0), (ob_x5, 300, 100, 20))
     #if ob_moving_r == True:
         #ob_x += speed
     #elif ob_moving_l == True:
@@ -149,43 +165,76 @@ def drawWindow():
         foe_animCount += 1
     else:
         win.blit(arab, (foe_x, foe_y))
+    win.blit(towergain1, ((ob_x - 10), 168))
+
     if hp <= 0:
         death = 1
         win.blit(dead_scr, (0, 0))
+
 
 
     pygame.display.update()
 
 run = True
 bullets = []
-arabs = []
 while run:
     clock.tick(30)
-    if ((x + width - 25) <= foe_x and y >= foe_y):
+    if ((x + width - 25) <= foe_x and ((x_level >= 1730) or (x_level <= 230))) or ((x + width - 25) <= foe_x and right == False and left == False and ((x_level < 1730) or (x_level > 230))):
         foe_x -= foe_speed
         foe_left = True
         foe_right = False
-    elif ((x - width + 25) >= foe_x):
+    elif ((x - width + 25) >= foe_x and ((x_level >= 1730) or (x_level <= 230))) or ((x - width + 25) >= foe_x and right == False and left == False and ((x_level < 1730) or (x_level > 230))):
         foe_x += foe_speed
         foe_right = True
         foe_left = False
-    if (((x + width - 25) == foe_x) or ((x - width + 25) == foe_x) and y >= foe_y):
+    elif ((x_level < 1730) and (x_level > 230)):
+        if right == True and (x + 30) >= foe_x:
+            foe_x -= (speed - foe_speed)
+            foe_right = True
+            foe_left = False
+        elif left == True and (x + width - 31) <= foe_x :
+            foe_x += (speed - foe_speed)
+            foe_left = True
+            foe_right = False
+        elif right == True and (x + width - 31) <= foe_x:
+            foe_left = True
+            foe_right = False
+            foe_x -= (foe_speed + speed)
+        elif left == True and (x + 30) >= foe_x:
+            foe_right = True
+            foe_left = False
+            foe_x += (foe_speed + speed)
+
+
+    if y == foe_y and (((x + width - 25) == foe_x) or ((x - width + 25) == foe_x)):
         if (hp != 0):
             hp -= 5
-    #ob_x = 100
-    #ob_y = 200
-    #while ob_moving_r == True:
-        #ob_x += speed
-    #while ob_moving_l == True:
-        #ob_x -= speed
-            #time.sleep(5)
-    #if x > 425:
-        #levelCount += 1
-        #x == 50
-        #win.blit(bg2, (0, 0))
-    #elif (x < 45) and (levelCount > 0):
-        #levelCount -= 1
-        #x == 479
+
+    if (y == 340 and x < (ob_x3 - 25)) and x > (ob_x3 + 50):
+        deadend_l = True
+    elif (y == 340 and x > (ob_x3 + 35)):
+        deadend_r = True
+    elif (y == 140 and x < (ob_x - 26)):
+        deadend_l = True
+    elif (y == 140 and x > (ob_x + 21)):
+        deadend_r = True
+    else:
+        deadend_l = False
+        deadend_r = False
+        jumpNo = False
+
+        
+    if y == 340 or y == 140:
+        jumpNo = True
+    else:
+        jumpNo = False
+
+#(ob_x3, 400, 70, 20))
+
+
+
+
+
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -197,6 +246,19 @@ while run:
             bullets.pop(bullets.index(bullet))
 
     keys = pygame.key.get_pressed()
+
+    if keys[pygame.K_c]:
+        if (x > (ob_x3 - 20) and x < (ob_x3 + 50)) and y == 435:
+            y = 340
+        elif (x > (ob_x - 20) and x < (ob_x +50)) and y == 435:
+            y = 140
+
+    if keys[pygame.K_v ]:
+        if (x > (ob_x3 - 20) and x < (ob_x3 + 50)) and y == 340:
+            y = 435
+        elif (x > (ob_x - 20) and x < (ob_x +50)) and y == 140:
+            y = 435
+
 
     if keys[pygame.K_l]:
         if hp > 0:
@@ -214,13 +276,13 @@ while run:
             height // 2), 5, (255, 0, 0), facing))
 
     if keys[pygame.K_a] and x > 10 and x_level > 10:
-        if (x_level > 1730) or (x_level < 230):
+        if ((x_level > 1730) or (x_level < 230)) and deadend_l != True:
             x_level -= speed
             x -= speed
             left = True
             right = False
             lastMove = "left"
-        elif x_level <= 1730 and x_level >= 230:
+        elif (x_level <= 1730 and x_level >= 230) and deadend_l != True:
             x_level -= speed
             left = True
             right = False
@@ -232,17 +294,18 @@ while run:
             ob_x3 += speed
             ob_x4 += speed
             ob_x5 += speed
+            wallx += speed
 
 
 
     elif keys[pygame.K_d] and (x < 500 - width - 10) and (x_level < 2000 - width - 10):
-        if (x_level < 230) or (x_level > 1730):
+        if ((x_level < 230) or (x_level > 1730)) and deadend_r != True:
             x_level += speed
             x += speed
             left = False
             right = True
             lastMove = "right"
-        elif x_level >= 230 and x_level <= 1730:
+        elif (x_level >= 230 and x_level <= 1730) and deadend_r != True:
             x_level += speed
             left = False
             right = True
@@ -254,6 +317,7 @@ while run:
             ob_x3 -= speed
             ob_x4 -= speed
             ob_x5 -= speed
+            wallx -= speed
 
     else:
         left = False
@@ -261,16 +325,15 @@ while run:
         animCount = 0
 
     if not(isJump):
-        if keys[pygame.K_w] or keys[pygame.K_SPACE]:
+        if (keys[pygame.K_w] or keys[pygame.K_SPACE]) and jumpNo == False:
             isJump = True
     else:
-        if jumpCount >= -10:
-            if jumpCount < 0:
+        if jumpCount >= -10:# jumpCount 10 - игрок начал прыжок, 0 - середина прыжка - 10 - закончил прыжок
+            if jumpCount < 0:#Игрок падает вниз
                 y += (jumpCount ** 2) / 2
-            else:
+            else:#Игрок поднимается вверх
                 y -= (jumpCount ** 2) / 2
             jumpCount -= 1
-
         else:
             isJump = False
             jumpCount = 10
