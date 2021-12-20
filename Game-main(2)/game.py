@@ -6,62 +6,62 @@ win = pygame.display.set_mode((500, 500))
 
 pygame.display.set_caption("Crusader")
 
-walkRight = [pygame.image.load('right_1.png'),
-pygame.image.load('right_2.png'), pygame.image.load('right_3.png'),
-pygame.image.load('right_4.png'), pygame.image.load('right_5.png'),
-pygame.image.load('right_6.png')]
+walkRight = [pygame.image.load('Textures/right_1.png'),
+pygame.image.load('Textures/right_2.png'), pygame.image.load('Textures/right_3.png'),
+pygame.image.load('Textures/right_4.png'), pygame.image.load('Textures/right_5.png'),
+pygame.image.load('Textures/right_6.png')]
 
-walkLeft = [pygame.image.load('left_1.png'),
-pygame.image.load('left_2.png'), pygame.image.load('left_3.png'),
-pygame.image.load('left_4.png'), pygame.image.load('left_5.png'),
-pygame.image.load('left_6.png')]
+walkLeft = [pygame.image.load('Textures/left_1.png'),
+pygame.image.load('Textures/left_2.png'), pygame.image.load('Textures/left_3.png'),
+pygame.image.load('Textures/left_4.png'), pygame.image.load('Textures/left_5.png'),
+pygame.image.load('Textures/left_6.png')]
 
-attack = [pygame.image.load('attack_1.png'),
-pygame.image.load('attack_2.png'), pygame.image.load('attack_3.png'),
-pygame.image.load('attack_4.png'), pygame.image.load('attack_5.png'),
-pygame.image.load('attack_6.png')]
+attack = [pygame.image.load('Textures/attack_1.png'),
+pygame.image.load('Textures/attack_2.png'), pygame.image.load('Textures/attack_3.png'),
+pygame.image.load('Textures/attack_4.png'), pygame.image.load('Textures/attack_5.png'),
+pygame.image.load('Textures/attack_6.png')]
 
-attackleft = [pygame.image.load('attackleft_1.png'),
-pygame.image.load('attackleft_2.png'), pygame.image.load('attackleft_3.png'),
-pygame.image.load('attackleft_4.png'), pygame.image.load('attackleft_5.png'),
-pygame.image.load('attackleft_6.png')]
-
-
-foeWalkLeft = [pygame.image.load('arab_left_1.png'), pygame.image.load('arab_left_2.png'),
-pygame.image.load('arab_left_3.png'), pygame.image.load('arab_left_4.png'),
-pygame.image.load('arab_left_5.png'), pygame.image.load('arab_left_6.png')]
-
-foeWalkRight = [pygame.image.load('arab_right_1.png'),
-pygame.image.load('arab_right_2.png'), pygame.image.load('arab_right_3.png'),
-pygame.image.load('arab_right_4.png'), pygame.image.load('arab_right_5.png'),
-pygame.image.load('arab_right_6.png')]
-
-climbingAnim = [pygame.image.load('climbing1.png'),
-pygame.image.load('climbing2.png'), pygame.image.load('climbing3.png'),
-pygame.image.load('climbing4.png'), pygame.image.load('climbing5.png'),
-pygame.image.load('climbing6.png')]
-
-archer_left = pygame.image.load('archer.png')
-archer_right = pygame.image.load('archer_right.png')
-
-deadbody = pygame.image.load('deadbody.png')
+attackleft = [pygame.image.load('Textures/attackleft_1.png'),
+pygame.image.load('Textures/attackleft_2.png'), pygame.image.load('Textures/attackleft_3.png'),
+pygame.image.load('Textures/attackleft_4.png'), pygame.image.load('Textures/attackleft_5.png'),
+pygame.image.load('Textures/attackleft_6.png')]
 
 
-arr_r = pygame.image.load('arrow.png')
-arr_l = pygame.image.load('arrow_l.png')
-arab = pygame.image.load('arab.png')
-hp_bar = pygame.image.load('hp_bar.png')
-dead_scr = pygame.image.load('deadscreen.png')
+foeWalkLeft = [pygame.image.load('Textures/arab_left_1.png'), pygame.image.load('Textures/arab_left_2.png'),
+pygame.image.load('Textures/arab_left_3.png'), pygame.image.load('Textures/arab_left_4.png'),
+pygame.image.load('Textures/arab_left_5.png'), pygame.image.load('Textures/arab_left_6.png')]
 
-bg = pygame.image.load('bg.jpg')
-bg2 = pygame.image.load('bg_2.jpg')
-playerStand = pygame.image.load('idle.png')
-wall = pygame.image.load('wall.png')
-tower1 = pygame.image.load('tower1.png')
-towergain1 = pygame.image.load('towergain1.png')
-idle_left = pygame.image.load('left_1.png')
-ladder = pygame.image.load('ladder.png')
-ladder2 = pygame.image.load('ladder.png')
+foeWalkRight = [pygame.image.load('Textures/arab_right_1.png'),
+pygame.image.load('Textures/arab_right_2.png'), pygame.image.load('Textures/arab_right_3.png'),
+pygame.image.load('Textures/arab_right_4.png'), pygame.image.load('Textures/arab_right_5.png'),
+pygame.image.load('Textures/arab_right_6.png')]
+
+climbingAnim = [pygame.image.load('Textures/climbing1.png'),
+pygame.image.load('Textures/climbing2.png'), pygame.image.load('Textures/climbing3.png'),
+pygame.image.load('Textures/climbing4.png'), pygame.image.load('Textures/climbing5.png'),
+pygame.image.load('Textures/climbing6.png')]
+
+archer_left = pygame.image.load('Textures/archer.png')
+archer_right = pygame.image.load('Textures/archer_right.png')
+
+deadbody = pygame.image.load('Textures/deadbody.png')
+
+
+arr_r = pygame.image.load('Textures/arrow.png')
+arr_l = pygame.image.load('Textures/arrow_l.png')
+arab = pygame.image.load('Textures/arab.png')
+hp_bar = pygame.image.load('Textures/hp_bar.png')
+dead_scr = pygame.image.load('Textures/deadscreen.png')
+
+bg = pygame.image.load('Textures/bg.jpg')
+bg2 = pygame.image.load('Textures/bg_2.jpg')
+playerStand = pygame.image.load('Textures/idle.png')
+wall = pygame.image.load('Textures/wall.png')
+tower1 = pygame.image.load('Textures/tower1.png')
+towergain1 = pygame.image.load('Textures/towergain1.png')
+idle_left = pygame.image.load('Textures/left_1.png')
+ladder = pygame.image.load('Textures/ladder.png')
+ladder2 = pygame.image.load('Textures/ladder.png')
 
 
 
